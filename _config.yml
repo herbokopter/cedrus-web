@@ -1,3 +1,4 @@
 exclude:
   - README.md
   - _tools
+  - kepek_letoltese.cmd

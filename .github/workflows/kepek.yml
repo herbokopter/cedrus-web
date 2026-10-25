@@ -1,0 +1,38 @@
+name: Kepek importalasa
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - .github/workflows/kepek.yml
+
+permissions:
+  contents: write
+
+jobs:
+  kepek:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Kepek letoltese a Squarespace-rol
+        run: |
+          mkdir -p img
+          get() { if curl -fsSL -A "Mozilla/5.0" -o "img/$1" "$2"; then echo "ok: $1"; else echo "HIBA: $1"; rm -f "img/$1"; fi; }
+          get logo.png "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/c1b6f46a-15c2-4132-bca0-8e2462c2d5d9/11zon_cropped+%285%29.png?format=500w"
+          get hero.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/1735741858981-71OP23YT5OEYSY7X7N3Q/unsplash-image-W4zX2DrEIDA.jpg?format=2500w"
+          get gyerek.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/7abe8e44-6ce7-471e-bbbb-65f287dcbd93/cdrusgyerek-ezgif.com-webp-to-jpg-converter.jpg?format=1500w"
+          get felnott.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/5074b08a-dc2e-43ed-a98b-768789114cbe/DALLE2025-01-0118.22.44-Arealisticandnaturalimageofapsychologicalcounselingsessionforadults.Onlythelowerpartsoftwoindividualsarevisible.Onepersonissit-ezgif.com-webp-to-jpg-converter.jpg?format=1500w"
+          get g1.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/30ea0b40-5765-4be9-86e6-41f41b886181/IMG_5493.jpg?format=1500w"
+          get g2.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/6be71f71-dd94-4113-b558-b4cd9e0cebbd/IMG_5481.jpg?format=1500w"
+          get g3.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/f15b3635-5ca1-448c-9cf2-e9590a9195b0/IMG_5507.jpg?format=1500w"
+          get g4.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/3e85ef1e-8ae7-4564-af1f-b255ff08fa0c/IMG_5510.jpg?format=1500w"
+          get g5.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/41eb8e15-6929-47cb-8db4-2196390ead54/IMG_5500.jpg?format=1500w"
+          get g6.jpg "https://images.squarespace-cdn.com/content/v1/67754ad232ef611abffc0801/240f1aba-1947-4431-b8fe-154e7af40fab/IMG_5501.jpg?format=1500w"
+          ls -la img
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add img
+          git diff --cached --quiet || git commit -m "Kepek importalasa a regi oldalrol"
+          git push
